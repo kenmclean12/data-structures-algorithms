@@ -1,0 +1,27 @@
+public class Solution {
+    private List<int> combination;
+    private List<List<int>> result;
+    public List<List<int>> CombinationSum(int[] nums, int target) {
+        combination = new List<int>();
+        result = new List<List<int>>();
+        Backtrack(nums, target, 0);
+        return result;
+    }
+
+    private void Backtrack(int[] nums, int remaining, int index) {
+        if (remaining == 0) {
+            result.Add(new List<int>(combination));
+            return;
+        }
+
+        if (remaining < 0) {
+            return;
+        }
+
+        for (int i = index; i < nums.Length; i++) {
+            combination.Add(nums[i]);
+            Backtrack(nums, remaining - nums[i], i);
+            combination.RemoveAt(combination.Count - 1);
+        }
+    }
+}
