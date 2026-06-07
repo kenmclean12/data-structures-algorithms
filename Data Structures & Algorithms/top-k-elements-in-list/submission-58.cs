@@ -1,19 +1,18 @@
 public class Solution {
-    public List<List<string>> GroupAnagrams(string[] strs) {
-        Dictionary<string, List<string>> map = new();
-
-        foreach (string str in strs) {
-           int[] count = new int[26];
-           for (int i = 0; i < str.Length; i++) {
-              count[str[i] - 'a']++;
-           }
-
-           string key = String.Join(",", count);
-           if (!map.ContainsKey(key)) map[key] = new List<string>();
-           
-           map[key].Add(str);
+    public int[] TopKFrequent(int[] nums, int k) {
+        Dictionary<int, int> map = new();
+        foreach (int num in nums) {
+          if (!map.ContainsKey(num)) {
+            map[num] = 1;
+          } else {
+            map[num]++;
+          }
         }
 
-        return map.Values.ToList<List<string>>();
+        return map
+          .OrderByDescending(x => x.Value)
+          .Take(k)
+          .Select(x => x.Key)
+          .ToArray<int>();
     }
 }
